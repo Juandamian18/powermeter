@@ -1,0 +1,127 @@
+/* General page styling */
+body {
+    margin: 0;
+    font-family: Montserrat, sans-serif;
+    background-color: #ffffff;
+  }
+  
+  h1 {
+    color: #333;
+    font-weight: 500;
+    margin-left: 250px;
+    padding: 20px 0;
+  }
+  
+  label {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Styling the menu */
+  #cssmenu {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: #f5f7f9;
+    color: white;
+    top: 0;
+    left: 0;
+    border-right: 1.8px solid #ededed;
+    box-shadow: 1.8px 0 5px rgb(0 0 0 / 5%);
+  }
+  
+  #cssmenu ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+  
+  #cssmenu ul li {
+    padding: 15px 20px;
+    display: flex;  /* Flexbox para alinear iconos y texto horizontalmente */
+    align-items: center;  /* Alinea los iconos verticalmente al centro del texto */
+  }
+  
+  #cssmenu ul li a {
+    text-decoration: none;
+    color: #4e4c55;
+    display: block;
+    font-size: 18px;
+    transition: background 0.3s;
+  }
+  
+  #cssmenu ul li a:hover {
+    color: #242424;
+  }
+  
+  /* Main content styling */
+  #hostname_settings {
+    margin-left: 10px;
+    padding: 20px;
+  }
+  
+  .vbox {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .box input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 400px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 30px;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #218838;
+  }
+  
+  /* Footer */
+  #fixedfooter {
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+  }
+  
+  #status {
+    color: #ffffff;
+    font-size: medium;
+  }
+
+  div#menu-button {
+    margin: 15px;
+  }
+
+  .divider {
+    height: 1px;
+    background-color: #d7d8d94a;
+    margin: 10px auto;
+    width: 90%;
+  }
+
+  .menu-icon {
+    margin-right: 10px;  /* Espacio entre el icono y el texto */
+    width: 24px; /* Ajusta el tamaño del icono */
+    height: 24px; /* Ajusta el tamaño del icono */
+}
+  
