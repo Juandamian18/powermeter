@@ -9,13 +9,13 @@ body {
     color: #333;
     font-weight: 500;
     margin-left: 250px;
-    padding: 20px 0;
+    padding: 5px 0;
   }
   
   label {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #333;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #403f3f;
     font-weight: 600;
   }
   
@@ -72,12 +72,13 @@ body {
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 400px;
+    width: 320px;
+    color: #4c4c4c;
     box-sizing: border-box;
   }
   
   button {
-    background-color: #28a745;
+    background-color: #403f3f;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -88,7 +89,7 @@ body {
   }
   
   button:hover {
-    background-color: #218838;
+    background-color: #8b88a3;
   }
   
   /* Footer */
@@ -123,5 +124,9 @@ body {
     margin-right: 10px;  /* Espacio entre el icono y el texto */
     width: 24px; /* Ajusta el tamaño del icono */
     height: 24px; /* Ajusta el tamaño del icono */
+}
+
+.box {
+  margin-bottom: 15px;
 }
   
