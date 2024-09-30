@@ -634,7 +634,7 @@ static void handleUpdate( AsyncWebServerRequest *request, const String& filename
 static void asyncwebserver_setup(void){
     asyncserver.on("/info", HTTP_GET, [](AsyncWebServerRequest * request) { request->send(200, "text/plain", "Firmwarestand: " __DATE__ " " __TIME__ "\r\nGCC-Version: " __VERSION__ "\r\nVersion: " __FIRMWARE__ "\r\n" ); } );
     asyncserver.addHandler( new SPIFFSEditor( SPIFFS ) );
-    asyncserver.serveStatic( "/", SPIFFS, "/" ).setDefaultFile( "index.htm" );
+    asyncserver.serveStatic( "/", SPIFFS, "/" ).setDefaultFile( "live.htm" );
     asyncserver.onNotFound([](AsyncWebServerRequest *request) { request->send(404); } );
     asyncserver.onFileUpload([](AsyncWebServerRequest *request, const String& filename, size_t index, uint8_t *data, size_t len, bool final){
         if( !index )
