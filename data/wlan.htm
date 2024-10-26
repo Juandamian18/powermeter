@@ -1,70 +1,65 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
    <meta charset='utf-8'>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="styles.css">
-<script src="jquery-lastest.min.js" type="text/javascript"></script>
-<script src="alarm.js" type="text/javascript"></script>
-<script src="script.js"></script>
+   <link rel="stylesheet" href="styles2.css">
+   <script src="jquery-lastest.min.js" type="text/javascript"></script>
+   <script src="alarm.js" type="text/javascript"></script>
+   <script src="script.js"></script>
 </head>
 <body>
 <div id='cssmenu'>
-<ul>
-  <li><a href='live.htm'>Inicio</a></li>
-  <li><a href='channel.htm'>Ajustes de Canal</a></li>
-  <!-- <li><a href='group.htm'>group settings</a></li>
-  <li><a href='display.htm'>Display settings</a></li>
-  <li><a href='ioport.htm'>IO Port settings</a></li> -->
-  <!-- <li><a href='mqtt.htm'>MQTT settings</a></li> -->
-  <li><a href='wlan.htm'>Ajustes de Wlan</a></li>
-  <li><a href='index.htm'>Configuración</a></li>
-  <!-- <li><a href='update.htm'>Web update</a></li>
-  <li><a href='info.htm'>Info</a></li> -->
-</ul>
+  <div class="divider"></div> <!-- Línea divisoria -->
+    <ul>
+      <li><img src="icono-inicio.svg" alt="Inicio" class="menu-icon"><a href='live.htm'>Inicio</a></li>
+      <li><img src="icono-canal.svg" alt="Ajustes de Canal" class="menu-icon"><a href='channel.htm'>Ajustes de Canal</a></li>
+      <li><img src="icono-wlan.svg" alt="Ajustes de Wlan" class="menu-icon"><a href='wlan.htm'>Ajustes de Wlan</a></li>
+      <li><img src="icono-configuracion.svg" alt="Configuración" class="menu-icon"><a href='index.htm'>Configuración</a></li>
+    </ul>
 </div>
-<h1>Wlan settings</h1>
+<h1>
 <div id="wlan_settings" class="hbox">
-  <div class="vbox">
-    <label>Wlan SSID</label><br>
-    <div class="box">
-      <input type='text' size='32' id='ssid'></input>
+    <div class="vbox">
+        <label for="ssid">Wlan SSID</label>
+        <div class="box">
+            <input type='text' size='63' id='ssid'></input>
+        </div>
     </div>
-  </div>
-  <div class="vbox">
-    <label>Wlan Password</label><br>
-    <div class="box">
-      <input type='text' size='32' id='password'></input>
+    <div class="vbox">
+        <label for="password">Wlan Password</label>
+        <div class="box">
+            <input type='text' size='63' id='password'></input>
+        </div>
     </div>
-  </div>
-  <div class="vbox">
-    <input type="checkbox" id="low_power" checked><label for="low_power"> enable low power radio</label>
-  </div class="vbox">
-  <div class="vbox">
-    <input type="checkbox" id="low_bandwidth" checked><label for="low_bandwidth"> enable low bandwidth radio</label>
-  </div class="vbox">
-  <div class="vbox">
-    <input type="checkbox" id="enable_softap" checked><label for="enable_softap"> enable softAP fallback</label>
-  </div class="vbox">
-  <div class="vbox">
-    <label>SoftAP SSID</label><br>
-    <div class="box">
-      <input type='text' size='32' id='softap_ssid'></input>
+    <div class="vbox">
+        <input type="checkbox" id="low_power" checked>
+        <label for="low_power">Habilitar Radio de Bajo Consumo</label>
     </div>
-  </div>
-  <div class="vbox">
-    <label>SoftAP Password</label><br>
-    <div class="box">
-      <input type='text' size='32' id='softap_password'></input>
+    <div class="vbox">
+        <input type="checkbox" id="low_bandwidth" checked>
+        <label for="low_bandwidth">Habilitar Radio de Bajo Ancho de Banda</label>
     </div>
-  </div>
+    <div class="vbox">
+        <input type="checkbox" id="enable_softap" checked>
+        <label for="enable_softap">Habilitar SoftAP Fallback</label>
+    </div>
+    <div class="vbox">
+        <label for="softap_ssid">SoftAP SSID</label>
+        <div class="box">
+            <input type='text' size='63' id='softap_ssid'></input>
+        </div>
+    </div>
+    <div class="vbox">
+        <label for="softap_password">SoftAP Password</label>
+        <div class="box">
+            <input type='text' size='63' id='softap_password'></input>
+        </div>
+    </div>
 </div>
-<br>
-<br>
-<button type='button' onclick='SendSetting("ssid");SendSetting("password");SendCheckboxSetting("enable_softap");SendCheckboxSetting("low_power");SendCheckboxSetting("low_bandwidth");SendSetting("softap_ssid");SendSetting("softap_password");SaveSettings();get_wlan_settings();' class='button'>save</button><br><br>
-<br>
-<br>
-<br>
+<button type='button' onclick='SendSetting("ssid"); SendSetting("password"); SendCheckboxSetting("enable_softap"); SendCheckboxSetting("low_power"); SendCheckboxSetting("low_bandwidth"); SendSetting("softap_ssid"); SendSetting("softap_password"); SaveSettings(); get_wlan_settings();' class='button'>Guardar</button><br>
 <div id='fixedfooter'><span id='status'>offline</span></div>
+</h1>
 </body>
 </html>

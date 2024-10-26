@@ -28,7 +28,7 @@
    <table width="50%" border="0">
       <tr>
         <td>
-          <input id="OSCMultIn" type="range" value="1" max="20" min="0.1" step="0.1" orient="vertical">
+          
         </td>
         <td width="60%">
           <canvas id=OScopeCanvas width="800" height="400"></canvas>
@@ -40,7 +40,9 @@
         <td>
         </td>
         <td>
-          <input type=button onclick="ToggleOScopePause(); OScopeProbe();" id=OScopeProbeButton value="|| / >">
+          <input type=button onclick="ToggleOScopePause(); OScopeProbe();" id=OScopeProbeButton value="⏯️">
+          <script>ToggleOScopePause();  OScopeProbe();</script>
+          <input id="OSCMultIn" type="range" value="1" max="20" min="0.1" step="0.1" orient="vertical">
           zoom: <output id="OSCMultOut"></output><br>
           <table width="100%" border="0">
             <tr>

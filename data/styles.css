@@ -439,7 +439,7 @@ input[type=text], select {
     font-family: Helvetica, sans-serif; font-size: 100%; line-height: 32px;
 }
 #OSCMultIn {
-  height: 400px;
+ /* height: 400px;*/
 }
 input[type=button], input[type=submit], input[type=reset] {
 	background-color: #666666;

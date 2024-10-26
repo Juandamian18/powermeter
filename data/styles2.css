@@ -13,8 +13,8 @@ body {
   }
   
   label {
-    font-size: 24px;
-    margin-bottom: 30px;
+    font-size: 20px;
+    margin-bottom: 20px;
     color: #403f3f;
     font-weight: 600;
   }
@@ -127,6 +127,15 @@ body {
 }
 
 .box {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+div#wlan_settings {
+  margin-left: 30px;
+}
+
+button.button {
+    margin-left: 280px;
+    margin-bottom: 80px;
 }
   
