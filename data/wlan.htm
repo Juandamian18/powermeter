@@ -19,7 +19,7 @@
       <li><img src="icono-configuracion.svg" alt="Configuración" class="menu-icon"><a href='index.htm'>Configuración</a></li>
     </ul>
 </div>
-<h1>
+<main>
 <div id="wlan_settings" class="hbox">
     <div class="vbox">
         <label for="ssid">Wlan SSID</label>
@@ -60,6 +60,6 @@
 </div>
 <button type='button' onclick='SendSetting("ssid"); SendSetting("password"); SendCheckboxSetting("enable_softap"); SendCheckboxSetting("low_power"); SendCheckboxSetting("low_bandwidth"); SendSetting("softap_ssid"); SendSetting("softap_password"); SaveSettings(); get_wlan_settings();' class='button'>Guardar</button><br>
 <div id='fixedfooter'><span id='status'>offline</span></div>
-</h1>
+</main>
 </body>
 </html>

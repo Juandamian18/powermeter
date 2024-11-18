@@ -3,26 +3,22 @@
    <meta charset='utf-8'>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="styles.css">
+   <link rel="stylesheet" href="styles2.css">
 <script src="jquery-lastest.min.js" type="text/javascript"></script>
 <script src="alarm.js" type="text/javascript"></script>
 <script src="script.js"></script>
 </head>
 <body>
-<div id='cssmenu'>
-<ul>
-  <li><a href='live.htm'>Inicio</a></li>
-  <li><a href='channel.htm'>Ajustes de Canal</a></li>
-  <!-- <li><a href='group.htm'>group settings</a></li>
-  <li><a href='display.htm'>Display settings</a></li>
-  <li><a href='ioport.htm'>IO Port settings</a></li> -->
-  <!-- <li><a href='mqtt.htm'>MQTT settings</a></li> -->
-  <li><a href='wlan.htm'>Ajustes de Wlan</a></li>
-  <li><a href='index.htm'>Configuración</a></li>
-  <!-- <li><a href='update.htm'>Web update</a></li>
-  <li><a href='info.htm'>Info</a></li> -->
-</ul>
-</div>
+  <div id='cssmenu'>
+    <div class="divider"></div> <!-- Línea divisoria -->
+      <ul>
+        <li><img src="icono-inicio.svg" alt="Inicio" class="menu-icon"><a href='live.htm'>Inicio</a></li>
+        <li><img src="icono-canal.svg" alt="Ajustes de Canal" class="menu-icon"><a href='channel.htm'>Ajustes de Canal</a></li>
+        <li><img src="icono-wlan.svg" alt="Ajustes de Wlan" class="menu-icon"><a href='wlan.htm'>Ajustes de Wlan</a></li>
+        <li><img src="icono-configuracion.svg" alt="Configuración" class="menu-icon"><a href='index.htm'>Configuración</a></li>
+      </ul>
+  </div>
+<main>
 <h1>live view</h1>
 <div id=OScope class="collapsible">
    <table width="50%" border="0">
@@ -110,5 +106,6 @@
    </table>
 </div>   
 <div id='fixedfooter'><span id='status'>offline</span></div>
+</main>
 </body>
 </html>

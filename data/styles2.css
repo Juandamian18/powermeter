@@ -8,8 +8,11 @@ body {
   h1 {
     color: #333;
     font-weight: 500;
+  }
+
+  main {
     margin-left: 250px;
-    padding: 5px 0;
+    padding: 20px;
   }
   
   label {
@@ -55,12 +58,7 @@ body {
   #cssmenu ul li a:hover {
     color: #242424;
   }
-  
-  /* Main content styling */
-  #hostname_settings {
-    margin-left: 10px;
-    padding: 20px;
-  }
+
   
   .vbox {
     display: flex;
@@ -128,10 +126,6 @@ body {
 
 .box {
   margin-bottom: 20px;
-}
-
-div#wlan_settings {
-  margin-left: 30px;
 }
 
 button.button {
