@@ -38,8 +38,8 @@
         public:
             wificlient_config_t();
             char hostname[ WIFICLIENT_MAX_TEXT_SIZE ] = "powermeter";
-            char ssid[ WIFICLIENT_MAX_TEXT_SIZE ] = "electrogeek";
-            char password[ WIFICLIENT_MAX_TEXT_SIZE ] = "012345678";
+            char ssid[ WIFICLIENT_MAX_TEXT_SIZE ] = "Personal-524";
+            char password[ WIFICLIENT_MAX_TEXT_SIZE ] = "gZ5HRDdp3J";
             bool enable_softap = true;
             char softap_ssid[ WIFICLIENT_MAX_TEXT_SIZE ] = "powermeter";
             char softap_password[ WIFICLIENT_MAX_TEXT_SIZE ] = "powermeter";

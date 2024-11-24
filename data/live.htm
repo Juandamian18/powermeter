@@ -19,7 +19,7 @@
       </ul>
   </div>
 <main>
-<h1>live view</h1>
+<h1>Vista en vivo</h1>
 <div id=OScope class="collapsible">
    <table width="50%" border="0">
       <tr>
@@ -37,7 +37,6 @@
         </td>
         <td>
           <input type=button onclick="ToggleOScopePause(); OScopeProbe();" id=OScopeProbeButton value="⏯️">
-          <script>ToggleOScopePause();  OScopeProbe();</script>
           <input id="OSCMultIn" type="range" value="1" max="20" min="0.1" step="0.1" orient="vertical">
           zoom: <output id="OSCMultOut"></output><br>
           <table width="100%" border="0">
@@ -87,16 +86,16 @@
             </tr>
             <tr>
               <td>
-                <input type="checkbox" id="channel12" checked><label id="channel_12_name" for="channel12">In</label>
+                <input type="checkbox" id="channel12" checked><label id="channel_12_name" for="channel12">Entrada</label>
               </td>
             <tr>
           </table>
         </td>
         <td>
-            samplerate:<br><input type=button onclick="SampleratePlus(); " id=SampleratePlusButton value="+">
+            frecuencia de muestreo:<br><input type=button onclick="SampleratePlus(); " id=SampleratePlusButton value="+">
             <input type=button onclick="SamplerateMinus(); " id=SamplerateMinusButton value="-">
             <input type=button onclick="SaveSettings(); " id=SaveButton value="save"><br>
-            phaseshift: <select id="channel" name="channel" onchange='SendSetting("channel");'><option value="0">Channel 0</option><option value="1">Channel 1</option><option value="2">Channel 2</option><option value="3">Channel 3</option><option value="4">Channel 4</option><option value="5">Channel 5</option><option value="6">Channel 6</option><option value="7">Channel 7</option><option value="8">Channel 8</option><option value="9">Channel 9</option><option value="10">Channel 10</option><option value="11">Channel 11</option><option value="12">Channel 12</option></select>
+            desfase: <select id="channel" name="channel" onchange='SendSetting("channel");'><option value="0">Canal 0</option><option value="1">Canal 1</option><option value="2">Canal 2</option><option value="3">Canal 3</option><option value="4">Canal 4</option><option value="5">Canal 5</option><option value="6">Canal 6</option><option value="7">Canal 7</option><option value="8">Canal 8</option><option value="9">Canal 9</option><option value="10">Canal 10</option><option value="11">Canal 11</option><option value="12">Canal 12</option></select><br>
             <input type=button onclick="PhaseshiftPlus(); " id=PlusButton value="<">
             <input type=button onclick="PhaseshiftMinus(); " id=MinusButton value=">">
             <input type=button onclick="SaveSettings(); " id=SaveButton value="save">
@@ -105,7 +104,7 @@
       </tr>
    </table>
 </div>   
-<div id='fixedfooter'><span id='status'>offline</span></div>
+<div id='fixedfooter'><span id='status'>desconectado</span></div>
 </main>
 </body>
 </html>

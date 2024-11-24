@@ -43,23 +43,23 @@
     </div>
     <div class="vbox">
         <input type="checkbox" id="enable_softap" checked>
-        <label for="enable_softap">Habilitar SoftAP Fallback</label>
+        <label for="enable_softap">Habilitar "Punto de Acceso"</label>
     </div>
     <div class="vbox">
-        <label for="softap_ssid">SoftAP SSID</label>
+        <label for="softap_ssid">SSID "Punto de Acceso"</label>
         <div class="box">
             <input type='text' size='63' id='softap_ssid'></input>
         </div>
     </div>
     <div class="vbox">
-        <label for="softap_password">SoftAP Password</label>
+        <label for="softap_password">Contraseña "Punto de Acceso"</label>
         <div class="box">
             <input type='text' size='63' id='softap_password'></input>
         </div>
     </div>
 </div>
 <button type='button' onclick='SendSetting("ssid"); SendSetting("password"); SendCheckboxSetting("enable_softap"); SendCheckboxSetting("low_power"); SendCheckboxSetting("low_bandwidth"); SendSetting("softap_ssid"); SendSetting("softap_password"); SaveSettings(); get_wlan_settings();' class='button'>Guardar</button><br>
-<div id='fixedfooter'><span id='status'>offline</span></div>
+<div id='fixedfooter'><span id='status'>desconectado</span></div>
 </main>
 </body>
 </html>
