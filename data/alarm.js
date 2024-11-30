@@ -503,63 +503,66 @@ function GotOScope(data) {
 
 	ftx.clearRect(0, 0, fcanvas.width, fcanvas.height);
 	
+	// Eje frecuencia
+	ftx.beginPath();
+	ftx.strokeStyle = "#000000";
+	ftx.fillStyle = "#000000";
+	ftx.lineWidth = 1;
+	
+	// Eje horizontal
+	ftx.moveTo(0, fcanvas.height - 20);
+	ftx.lineTo(fcanvas.width, fcanvas.height - 20);
+	
+	// Etiquetas de frecuencia cada 100Hz hasta 1000Hz
+	for(let f = 0; f <= 1000; f += 100) {
+		let x = (f * fcanvas.width) / 1000;
+		ftx.moveTo(x, fcanvas.height - 20);
+		ftx.lineTo(x, fcanvas.height - 15);
+		ftx.font = "12px Arial";
+		ftx.fillText(f + "Hz", x - 15, fcanvas.height - 5);
+	}
+	ftx.stroke();
+	
+	const barWidth = fcanvas.width / fftsamps;
+	
 	for( var round=0 ; round < channels ; round++ ) {
-		ftx.beginPath();
-		
 		switch( channeltype.substr( round, 1) ) {
             case '0':
             case '2':
-                ftx.strokeStyle = "#ff0000"
+                ftx.fillStyle = "#ff0000"
                 break;
             case '1':
             case '3':
-                ftx.strokeStyle = "#0000ff"
+                ftx.fillStyle = "#0000ff"
                 break;
             case '4':
             case '6':
-                ftx.strokeStyle = "#000000"
+                ftx.fillStyle = "#000000"
                 break;
             case '5':
-                ftx.strokeStyle = "#00B000"
+                ftx.fillStyle = "#00B000"
                 break;
             case '7':
-                ftx.strokeStyle = "#a0a0a0"
+                ftx.fillStyle = "#a0a0a0"
                 break;
 		}
 
-		var lastsamp = parseInt( fftdata.substr( fftsamps * round ,3),16 ) * mult;
-		var x1 = 0;
-		var y1 = 0;
-
 		for (var i = fftsamps * round ; i < fftsamps * round + fftsamps ; i++) {
-			var x2 = ((i-(fftsamps * round)) ) * fcanvas.clientWidth / ( fftsamps - 1 );
-			var samp = parseInt(fftdata.substr(i * 3, 3), 16) * mult;
-			var y2 = ( 1.-samp / 1024 ) * fcanvas.clientHeight - 1;
+			var x = ((i-(fftsamps * round)) ) * fcanvas.width / fftsamps;
+			var magnitude = parseInt(fftdata.substr(i * 3, 3), 16) * mult;
+			var barHeight = (magnitude / 1024) * (fcanvas.height - 4);
 			
-			ftx.moveTo( x1, y1 );
-            ftx.bezierCurveTo( x2, y1, x1, y2, x2, y2 );
-            x1 = x2;
-            y1 = y2;
-			lastsamp = samp;
+			ftx.fillRect(x, fcanvas.height - 20 - barHeight, barWidth - 1, barHeight);
 		}
-		ftx.stroke();
 	}
 	
 	ftx.beginPath();
-	ftx.strokeStyle = "#000000";
+	ftx.fillStyle = "#000000";
     ftx.font = "30px Arial";
     ftx.fillText("Espectro",10,30);
     ftx.stroke();
 
 	ftx.beginPath();
-	ftx.strokeStyle = "#c0c0c0";
-	for (i = 1; (iratio * mult * i) < ( fcanvas.clientHeight ); i++) {
-		ftx.moveTo(0, fcanvas.clientHeight - (iratio * mult * i) );
-		ftx.lineTo( ftx.canvas.width, fcanvas.clientHeight - (iratio * mult * i) );
-	}
-	ftx.stroke();
-	ftx.beginPath();
-	
 	ftx.strokeStyle = "#000000";
 	ftx.strokeRect( 0,  0, fcanvas.clientWidth, fcanvas.clientHeight );
 	ftx.stroke();

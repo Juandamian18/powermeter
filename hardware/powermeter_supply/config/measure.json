@@ -15,7 +15,7 @@
         "active": false
       },
       {
-        "name": "all power",
+        "name": "potencia todos",
         "active": false
       },
       {
@@ -29,7 +29,7 @@
     ],
     "channel": [
       {
-        "name": "L1 current",
+        "name": "L1 corriente",
         "type": 0,
         "true_rms": true,
         "report_exp": 0,
@@ -51,7 +51,7 @@
         "mircocode": "51750000000000000000"
       },
       {
-        "name": "L1 power",
+        "name": "L1 potencia",
         "type": 4,
         "true_rms": false,
         "report_exp": 3,
@@ -62,7 +62,7 @@
         "mircocode": "6130318081a000000000"
       },
       {
-        "name": "L1 reactive power",
+        "name": "L1 potencia reactiva",
         "type": 5,
         "true_rms": false,
         "report_exp": 3,
@@ -73,7 +73,7 @@
         "mircocode": "6130318081e0b1a0d000"
       },
       {
-        "name": "L2 current",
+        "name": "L2 corriente",
         "type": 0,
         "true_rms": true,
         "report_exp": 0,
@@ -95,7 +95,7 @@
         "mircocode": "54700000000000000000"
       },
       {
-        "name": "L2 power",
+        "name": "L2 potencia",
         "type": 4,
         "true_rms": false,
         "report_exp": 3,
@@ -106,7 +106,7 @@
         "mircocode": "6132338283a000000000"
       },
       {
-        "name": "L2 reactive power",
+        "name": "L2 potencia reactiva",
         "type": 5,
         "true_rms": false,
         "report_exp": 3,
@@ -117,7 +117,7 @@
         "mircocode": "6132338283e0b5a0d000"
       },
       {
-        "name": "L3 current",
+        "name": "L3 corriente",
         "type": 0,
         "true_rms": true,
         "report_exp": 0,
@@ -139,7 +139,7 @@
         "mircocode": "55700000000000000000"
       },
       {
-        "name": "L3 power",
+        "name": "L3 potencia",
         "type": 4,
         "true_rms": false,
         "report_exp": 3,
@@ -150,7 +150,7 @@
         "mircocode": "6134358485a000000000"
       },
       {
-        "name": "L3 reactive power",
+        "name": "L3 potencia reactiva",
         "type": 5,
         "true_rms": false,
         "report_exp": 3,
@@ -161,7 +161,7 @@
         "mircocode": "6134358485e0b9a0d000"
       },
       {
-        "name": "all power",
+        "name": "potencia todos",
         "type": 4,
         "true_rms": false,
         "report_exp": 3,
