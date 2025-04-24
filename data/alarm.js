@@ -514,8 +514,8 @@ function GotOScope(data) {
 	ftx.lineTo(fcanvas.width, fcanvas.height - 20);
 	
 	// Etiquetas de frecuencia cada 100Hz hasta 1000Hz
-	for(let f = 0; f <= 1000; f += 100) {
-		let x = (f * fcanvas.width) / 1000;
+	for(let f = 0; f <= 500; f += 50) {
+		let x = (f * fcanvas.width) / 500;
 		ftx.moveTo(x, fcanvas.height - 20);
 		ftx.lineTo(x, fcanvas.height - 15);
 		ftx.font = "12px Arial";

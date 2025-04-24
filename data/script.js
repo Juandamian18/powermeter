@@ -7,8 +7,7 @@
       }, options);
 
       return this.each(function() {
-          // Aquí se inserta el logo en lugar del título
-          cssmenu.prepend('<div id="menu-button"><img src="logo.svg" alt="Logo" style="height: 30px;margin-top: 5px;margin-bottom: 5px;"></div>');
+          //cssmenu.prepend('<div id="menu-button"><img src="logo.svg" alt="Logo" style="height: 30px;margin-top: 5px;margin-bottom: 5px;"></div>');
           $(this).find("#menu-button").on('click', function() {
               $(this).toggleClass('menu-opened');
               var mainmenu = $(this).next('ul');
