@@ -29,7 +29,7 @@
 #include "display.h"
 #include "ioport.h"
 #include "measure.h"
-#include "mqttclient.h"
+// #include "mqttclient.h"
 #include "ntp.h"
 #include "webserver.h"
 #include "wificlient.h"
@@ -54,7 +54,7 @@ void setup( void ) {
      * Setup Tasks
      */
     measure_StartTask();
-    mqtt_client_StartTask();
+    // mqtt_client_StartTask();
     asyncwebserver_StartTask();
     ntp_StartTask();
 }

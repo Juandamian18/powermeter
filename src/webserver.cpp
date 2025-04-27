@@ -34,7 +34,7 @@
 #include "config/mqtt_config.h"
 #include "config/wifi_config.h"
 #include "config.h"
-#include "mqttclient.h"
+//#include "mqttclient.h"
 #include "webserver.h"
 #include "measure.h"
 #include "display.h"
@@ -144,7 +144,7 @@ static void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, Aw
             display_save_settings();
             ioport_save_settings();
             measure_save_settings();
-            mqtt_save_settings();
+            //mqtt_save_settings();
             wificlient_save_settings();
             client->printf("status\\Save" );
         }
@@ -192,13 +192,13 @@ static void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, Aw
             client->printf("checkbox\\low_bandwidth\\%s", wificlient_get_low_bandwidth() ? "true" : "false ");
         }
         else if ( !strcmp("get_mqtt_settings", cmd ) ) {
-            client->printf("mqtt_server\\%s", mqtt_client_get_server() );
-            client->printf("mqtt_port\\%d", mqtt_client_get_port() );
-            client->printf("mqtt_username\\%s", mqtt_client_get_username() );
-            client->printf("mqtt_password\\%s", "********" );
-            client->printf("mqtt_topic\\%s", mqtt_client_get_topic() );
-            client->printf("mqtt_interval\\%d", mqtt_client_get_interval() );
-            client->printf("checkbox\\mqtt_realtimestats\\%s", mqtt_client_get_realtimestats()? "true" : "false" );
+            // client->printf("mqtt_server\\%s", mqtt_client_get_server() );
+            // client->printf("mqtt_port\\%d", mqtt_client_get_port() );
+            // client->printf("mqtt_username\\%s", mqtt_client_get_username() );
+            // client->printf("mqtt_password\\%s", "********" );
+            // client->printf("mqtt_topic\\%s", mqtt_client_get_topic() );
+            // client->printf("mqtt_interval\\%d", mqtt_client_get_interval() );
+            // client->printf("checkbox\\mqtt_realtimestats\\%s", mqtt_client_get_realtimestats()? "true" : "false" );
         }
         else if ( !strcmp("get_measurement_settings", cmd ) ) {
             client->printf("network_frequency\\%f", measure_get_network_frequency() );
@@ -459,32 +459,32 @@ static void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, Aw
         }
         /* MQTT Server */
         else if ( !strcmp("mqtt_server", cmd ) ) {
-            mqtt_client_set_server( value );
+            // mqtt_client_set_server( value );
         }
         /* MQTT Interval */
         else if ( !strcmp("mqtt_port", cmd ) ) {
-            mqtt_client_set_port( atoi( value ) );
+            // mqtt_client_set_port( atoi( value ) );
         }
         /* MQTT User */
         else if ( !strcmp("mqtt_username", cmd ) ) {
-            mqtt_client_set_username( value );
+            // mqtt_client_set_username( value );
         }
         /* MQTT Pass */
         else if ( !strcmp("mqtt_password", cmd ) ) {
-            if ( strcmp( "********", value ) )
-                mqtt_client_set_password( value );
+            // if ( strcmp( "********", value ) )
+                // mqtt_client_set_password( value );
         }
         /* MQTT Topic */
         else if ( !strcmp("mqtt_topic", cmd ) ) {
-            mqtt_client_set_topic( value );
+            // mqtt_client_set_topic( value );
         }
         /* MQTT Interval */
         else if ( !strcmp("mqtt_interval", cmd ) ) {
-            mqtt_client_set_interval( atoi( value ) );
+            // mqtt_client_set_interval( atoi( value ) );
         }
         /* MQTT Interval */
         else if ( !strcmp("mqtt_realtimestats", cmd ) ) {
-            mqtt_client_set_realtimestats( atoi( value ) ? true : false );
+            // mqtt_client_set_realtimestats( atoi( value ) ? true : false );
         }
         /* store AC-main voltage frequency */
         else if ( !strcmp("samplerate_corr", cmd ) ) {
@@ -592,7 +592,7 @@ static void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, Aw
  * based on: https://github.com/lbernstone/asyncUpdate/blob/master/AsyncUpdate.ino
  */
 static void handleUpdate( AsyncWebServerRequest *request, const String& filename, size_t index, uint8_t *data, size_t len, bool final) {
-    mqtt_client_disable();
+    // mqtt_client_disable();
 
     if ( !index ) {
         /*
@@ -623,7 +623,7 @@ static void handleUpdate( AsyncWebServerRequest *request, const String& filename
             display_save_settings();
             ioport_save_settings();
             measure_save_settings();
-            mqtt_save_settings();
+            // mqtt_save_settings();
             wificlient_save_settings();
             ESP.restart();
         }

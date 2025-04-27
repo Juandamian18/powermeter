@@ -28,6 +28,11 @@
 wificlient_config_t::wificlient_config_t() : BaseJsonConfig( WIFICLIENT_JSON_CONFIG_FILE ) {
 }
 
+const char* getOrDefault(JsonVariant v, const char* def) {
+    if (v.is<const char*>()) return v.as<const char*>();
+    return def;
+}
+
 bool wificlient_config_t::onSave(JsonDocument& doc) {
 
     doc["hostname"] = hostname;
@@ -52,12 +57,12 @@ bool wificlient_config_t::onLoad(JsonDocument& doc) {
     WiFi.macAddress( mac );
     snprintf( tmp_hostname, sizeof( tmp_hostname ), "powermeter_%02x%02x%02x", mac[3], mac[4], mac[5] );
     
-    strlcpy( hostname, doc["hostname"] | tmp_hostname, sizeof( hostname ) );
-    strlcpy( ssid, doc["ssid"] | "", sizeof( ssid ) );
-    strlcpy( password, doc["password"] | "", sizeof( password ) );
+    strlcpy( hostname, getOrDefault(doc["hostname"], tmp_hostname), sizeof(hostname) );
+    strlcpy( ssid, getOrDefault(doc["ssid"], ""), sizeof(ssid) );
+    strlcpy( password, getOrDefault(doc["password"], ""), sizeof(password) );
     enable_softap = doc["enable_softap"] | true;
-    strlcpy( softap_ssid, doc["softap_ssid"] | tmp_hostname, sizeof( softap_ssid ) );
-    strlcpy( softap_password, doc["softap_password"] | "powermeter", sizeof( softap_password ) );
+    strlcpy( softap_ssid, getOrDefault(doc["softap_ssid"], tmp_hostname), sizeof(softap_ssid) );
+    strlcpy( softap_password, getOrDefault(doc["softap_password"], "powermeter"), sizeof(softap_password) );
     timeout = doc["timeout"] | 15;
     low_bandwidth = doc["low_bandwidth"] | false;
     low_power = doc["low_power"] | false;
