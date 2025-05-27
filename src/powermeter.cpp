@@ -26,13 +26,13 @@
 #include <SPIFFS.h>
 
 #include "config.h"
-#include "display.h"
 #include "ioport.h"
 #include "measure.h"
-// #include "mqttclient.h"
 #include "ntp.h"
 #include "webserver.h"
 #include "wificlient.h"
+#include "lcd.h"
+
 /**
  * @brief arduino setup function
  */
@@ -48,21 +48,20 @@ void setup( void ) {
         SPIFFS.format();
     }
     ioport_init();
-    display_init();
     wificlient_init();
     /*
      * Setup Tasks
      */
     measure_StartTask();
-    // mqtt_client_StartTask();
     asyncwebserver_StartTask();
     ntp_StartTask();
+    lcd_init();
 }
 
 /**
  * @brief arduino main loop
  */
 void loop() {
-    display_loop();
+    lcd_loop();
     ioport_loop();
 }
