@@ -1,45 +1,247 @@
 <html>
 <head>
-   <meta charset='utf-8'>
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="styles2.css">
-<script src="jquery-lastest.min.js" type="text/javascript"></script>
-<script src="alarm.js" type="text/javascript"></script>
-<script src="script.js"></script>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="jquery-lastest.min.js" type="text/javascript"></script>
+  <script src="alarm.js" type="text/javascript"></script>
+  <script src="script.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+    #cssmenu {
+      background: #222;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    #cssmenu ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    #cssmenu li {
+      flex: 1 1 120px;
+      text-align: center;
+      padding: 0.5em 0;
+    }
+    #cssmenu a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+      padding: 0.5em 0;
+      transition: background 0.2s;
+    }
+    #cssmenu a:hover {
+      background: #444;
+    }
+    .menu-icon {
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    .divider {
+      border-bottom: 1px solid #444;
+      margin-bottom: 0.5em;
+    }
+    main {
+      max-width: 1100px;
+      margin: 2em auto;
+      padding: 1em;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 1em;
+      text-align: center;
+      font-weight: 600;
+      color: #222;
+    }
+    .collapsible {
+      margin-bottom: 2em;
+    }
+    .oscilloscope-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+    .canvas-container {
+      width: 100%;
+    }
+    .controls-section {
+      display: flex;
+      gap: 2em;
+      align-items: flex-start;
+    }
+    .left-controls {
+      flex: 1;
+    }
+    .right-controls {
+      min-width: 220px;
+    }
+    @media (max-width: 900px) {
+      main {
+        max-width: 98vw;
+        padding: 0.5em;
+      }
+      #cssmenu ul {
+        flex-direction: column;
+      }
+      #cssmenu li {
+        padding: 0.7em 0;
+      }
+      .controls-section {
+        flex-direction: column;
+        gap: 1em;
+      }
+      .right-controls {
+        min-width: auto;
+      }
+
+      .right-controls,
+      .left-controls {
+        width: 100%;
+      }
+    }
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+      max-width: 100%;
+      aspect-ratio: 2 / 1;
+      border-radius: 8px;
+      background: #fafafa;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+      margin-bottom: 1em;
+      display: block;
+    }
+    input[type="range"] {
+      width: 100px;
+      margin: 0 1em;
+    }
+    input[type="button"] {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5em 1em;
+      margin: 0.2em 0.2em;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    input[type="button"]:hover {
+      background: #1565c0;
+    }
+    select {
+      padding: 0.3em;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin: 0.3em 0;
+    }
+    label {
+      margin-left: 0.3em;
+      font-size: 1em;
+    }
+    #fixedfooter {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #333;
+      color: #fff;
+      padding: 0.7em 1em;
+      font-size: 1.1em;
+      text-align: center;
+      z-index: 100;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 600px) {
+      canvas {
+        aspect-ratio: 2 / 1;
+        height: auto !important;
+      }
+      input[type="range"] {
+        width: 70px;
+      }
+      h1 {
+        font-size: 1.3em;
+      }
+    }
+    .channels-table {
+      width: 100%;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      border-radius: 8px;
+      background: #f7f7f7;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .channels-table td {
+      padding: 0.4em 0.2em;
+      text-align: left;
+    }
+    .osc-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7em;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+    .control-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 900px) {
+      .osc-controls {
+        gap: 0.4em;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div id='cssmenu'>
-    <div class="divider"></div> <!-- Línea divisoria -->
-      <ul>
-        <li><img src="icono-inicio.svg" alt="Inicio" class="menu-icon"><a href='live.htm'>Inicio</a></li>
-        <li><img src="icono-canal.svg" alt="Ajustes de Canal" class="menu-icon"><a href='channel.htm'>Ajustes de Canal</a></li>
-        <li><img src="icono-wlan.svg" alt="Ajustes de Wlan" class="menu-icon"><a href='wlan.htm'>Ajustes de Wlan</a></li>
-        <li><img src="icono-configuracion.svg" alt="Configuración" class="menu-icon"><a href='index.htm'>Configuración</a></li>
-      </ul>
-  </div>
-<main>
-<h1>Vista en vivo</h1>
-<div id=OScope class="collapsible">
-   <table width="50%" border="0">
-      <tr>
-        <td width="100%" colspan="3">
-          <canvas id=OScopeCanvas width="800" height="400"></canvas>
-        </td>
-      </tr>
-      <tr>
-        <td width="100%" colspan="3">
-          <canvas id=FFTCanvas width="800" height="400"></canvas>
-        </td>
-      </tr>
-        <td>
-        </td>
-        <td>
-          <input type=button onclick="ToggleOScopePause(); OScopeProbe();" id=OScopeProbeButton value="⏯️">
-          <input id="OSCMultIn" type="range" value="1" max="20" min="0.1" step="0.1" orient="vertical">
-          zoom: <output id="OSCMultOut"></output><br>
-          <table width="100%" border="0">
-            <tr>
+  <nav id='cssmenu'>
+   <div class="divider"></div>
+   <ul>
+    <li><img src="icono-inicio.svg" alt="Inicio" class="menu-icon"><a href='live.htm'>Inicio</a></li>
+    <li><img src="icono-canal.svg" alt="Ajustes de Canal" class="menu-icon"><a href='channel.htm'>Ajustes de Canal</a></li>
+    <li><img src="icono-wlan.svg" alt="Ajustes de Wlan" class="menu-icon"><a href='wlan.htm'>Ajustes de Wlan</a></li>
+    <li><img src="icono-configuracion.svg" alt="Configuración" class="menu-icon"><a href='index.htm'>Configuración</a></li>
+   </ul>
+  </nav>
+  <main>
+   <h1>Vista en vivo</h1>
+   <div id="OScope" class="collapsible">
+    <div class="oscilloscope-container">
+      <div class="canvas-container">
+        <canvas id="OScopeCanvas" width="800" height="400"></canvas>
+      </div>
+      <div class="canvas-container">
+        <canvas id="FFTCanvas" width="800" height="400"></canvas>
+      </div>
+      <div class="controls-section">
+        <div class="left-controls">
+          <div class="osc-controls">
+            <div class="control-group">
+              <div class="control-row">
+                <input type="button" onclick="ToggleOScopePause(); OScopeProbe();" id="OScopeProbeButton" value="⏯️">
+                <input id="OSCMultIn" type="range" value="1" max="20" min="0.1" step="0.1">
+                <span>zoom: <output id="OSCMultOut"></output></span>
+              </div>
+            </div>
+            <table class="channels-table">
+             <tr>
               <td>
                 <input type="checkbox" id="channel0" checked><label id="channel_0_name" for="channel0">I1</label>
               </td>
@@ -47,10 +249,10 @@
                 <input type="checkbox" id="channel4" checked><label id="channel_4_name" for="channel4">I2</label>
               </td>
               <td>
-                <input type="checkbox" id="channel8" checked><label id="channel_8_name" for="channel8">I3</label><br>
+                <input type="checkbox" id="channel8" checked><label id="channel_8_name" for="channel8">I3</label>
               </td>
-            </tr>
-            <tr>
+             </tr>
+             <tr>
               <td>
                 <input type="checkbox" id="channel1" checked><label id="channel_1_name" for="channel1">U1</label>
               </td>
@@ -58,10 +260,10 @@
                 <input type="checkbox" id="channel5" checked><label id="channel_5_name" for="channel5">U2</label>
               </td>
               <td>
-                <input type="checkbox" id="channel9" checked><label id="channel_9_name" for="channel9">U3</label><br>
+                <input type="checkbox" id="channel9" checked><label id="channel_9_name" for="channel9">U3</label>
               </td>
-            </tr>
-            <tr>
+             </tr>
+             <tr>
               <td>
                 <input type="checkbox" id="channel2" checked><label id="channel_2_name" for="channel2">P1</label>
               </td>
@@ -69,10 +271,10 @@
                 <input type="checkbox" id="channel6" checked><label id="channel_6_name" for="channel6">P2</label>
               </td>
               <td>
-                <input type="checkbox" id="channel10" checked><label id="channel_10_name" for="channel10">P3</label><br>
+                <input type="checkbox" id="channel10" checked><label id="channel_10_name" for="channel10">P3</label>
               </td>
-            </tr>
-            <tr>
+             </tr>
+             <tr>
               <td>
                 <input type="checkbox" id="channel3" checked><label id="channel_3_name" for="channel3">-</label>
               </td>
@@ -80,30 +282,58 @@
                 <input type="checkbox" id="channel7" checked><label id="channel_7_name" for="channel7">-</label>
               </td>
               <td>
-                <input type="checkbox" id="channel11" checked><label id="channel_11_name" for="channel11">-</label><br>
+                <input type="checkbox" id="channel11" checked><label id="channel_11_name" for="channel11">-</label>
               </td>
-            </tr>
-            <tr>
+             </tr>
+             <tr>
               <td>
                 <input type="checkbox" id="channel12" checked><label id="channel_12_name" for="channel12">Entrada</label>
               </td>
-            <tr>
-          </table>
-        </td>
-        <td>
-            frecuencia de muestreo:<br><input type=button onclick="SampleratePlus(); " id=SampleratePlusButton value="+">
-            <input type=button onclick="SamplerateMinus(); " id=SamplerateMinusButton value="-">
-            <input type=button onclick="SaveSettings(); " id=SaveButton value="save"><br>
-            desfase: <select id="channel" name="channel" onchange='SendSetting("channel");'><option value="0">Canal 0</option><option value="1">Canal 1</option><option value="2">Canal 2</option><option value="3">Canal 3</option><option value="4">Canal 4</option><option value="5">Canal 5</option><option value="6">Canal 6</option><option value="7">Canal 7</option><option value="8">Canal 8</option><option value="9">Canal 9</option><option value="10">Canal 10</option><option value="11">Canal 11</option><option value="12">Canal 12</option></select><br>
-            <input type=button onclick="PhaseshiftPlus(); " id=PlusButton value="<">
-            <input type=button onclick="PhaseshiftMinus(); " id=MinusButton value=">">
-            <input type=button onclick="SaveSettings(); " id=SaveButton value="save">
-        </td>
-      <tr>
-      </tr>
-   </table>
-</div>   
-<div id='fixedfooter'><span id='status'>desconectado</span></div>
-</main>
+             </tr>
+            </table>
+          </div>
+        </div>
+        <div class="right-controls">
+          <div class="osc-controls">
+            <div class="control-group">
+              <span>frecuencia de muestreo:</span>
+              <div class="control-row">
+                <input type="button" onclick="SampleratePlus();" id="SampleratePlusButton" value="+">
+                <input type="button" onclick="SamplerateMinus();" id="SamplerateMinusButton" value="-">
+                <input type="button" onclick="SaveSettings();" id="SaveButton" value="save">
+              </div>
+            </div>
+            <div class="control-group">
+              <span>desfase:</span>
+              <select id="channel" name="channel" onchange='SendSetting("channel");'>
+               <option value="0">Canal 0</option>
+               <option value="1">Canal 1</option>
+               <option value="2">Canal 2</option>
+               <option value="3">Canal 3</option>
+               <option value="4">Canal 4</option>
+               <option value="5">Canal 5</option>
+               <option value="6">Canal 6</option>
+               <option value="7">Canal 7</option>
+               <option value="8">Canal 8</option>
+               <option value="9">Canal 9</option>
+               <option value="10">Canal 10</option>
+               <option value="11">Canal 11</option>
+               <option value="12">Canal 12</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <div class="control-row">
+                <input type="button" onclick="PhaseshiftPlus();" id="PlusButton" value="<">
+                <input type="button" onclick="PhaseshiftMinus();" id="MinusButton" value=">">
+                <input type="button" onclick="SaveSettings();" id="SaveButton" value="save">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
+   <div id='fixedfooter'><span id='status'>desconectado</span></div>
+  </main>
 </body>
 </html>

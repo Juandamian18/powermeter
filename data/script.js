@@ -66,3 +66,26 @@
       });
   });
 })(jQuery);
+
+// Canvas responsive handling
+function resizeCanvases() {
+  const canvases = document.querySelectorAll('canvas');
+  canvases.forEach(canvas => {
+    const rect = canvas.getBoundingClientRect();
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas internal dimensions to match display size
+    if (canvas.width !== rect.width || canvas.height !== rect.height) {
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+    }
+  });
+}
+
+// Add resize event listener
+window.addEventListener('resize', resizeCanvases);
+
+// Initial resize call
+document.addEventListener('DOMContentLoaded', function() {
+  resizeCanvases();
+});
