@@ -4,8 +4,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="jquery-lastest.min.js" type="text/javascript"></script>
-  <script src="alarm.js" type="text/javascript"></script>
-  <script src="script.js"></script>
   <style>
     body {
       margin: 0;
@@ -208,6 +206,63 @@
         gap: 0.4em;
       }
     }
+    .status-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+      border-radius: 8px;
+      background: #f7f7f7;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .status-table th, .status-table td {
+      padding: 0.4em 0.8em;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+    .status-table th {
+      background-color: #e0e0e0;
+      font-weight: 600;
+    }
+    .group-name {
+      font-weight: bold;
+      color: #333;
+    }
+    .frequency-info {
+      margin-top: 1em;
+      text-align: center;
+      font-size: 0.9em;
+      color: #555;
+    }
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 8px;
+      background: #f7f7f7;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .table-container::-webkit-scrollbar {
+      height: 8px;
+    }
+    .table-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+    .table-container::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+    @media (max-width: 600px) {
+      .status-table {
+        min-width: 600px; /* Ensure table doesn't shrink below readable size */
+      }
+      .table-container {
+        margin: 0 -0.5em; /* Negative margin to allow full-width scroll on mobile */
+        border-radius: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -332,8 +387,177 @@
         </div>
       </div>
     </div>
+   
+   <!-- Status Table Section -->
+   <div id="statusSection" class="collapsible">
+     <h2>Estado del Sistema</h2>
+     <div class="status-container">
+       <div class="table-container">
+         <table id="statusTable" class="status-table">
+           <thead>
+             <tr>
+               <th>Grupo</th>
+               <th>Corriente (I)</th>
+               <th>Tensión (U)</th>
+               <th>Potencia Activa (P)</th>
+               <th>Potencia Reactiva (Pvar)</th>
+               <th>Factor de Potencia (Cos φ)</th>
+             </tr>
+           </thead>
+           <tbody id="statusTableBody">
+             <!-- Data will be populated by JavaScript -->
+           </tbody>
+         </table>
+       </div>
+       <div class="frequency-info">
+         <span id="frequencyDisplay">Frecuencia: -- Hz</span>
+       </div>
+     </div>
    </div>
+   
    <div id='fixedfooter'><span id='status'>desconectado</span></div>
   </main>
+
+  <script>
+    // Function to parse the status string and update the table
+    function parseStatusAndUpdateTable(statusString) {
+      try {
+        // Remove the "status\online (" prefix and ")" suffix
+        let cleanString = statusString.replace(/^status\\online \(/, '').replace(/\)$/, '');
+        
+        // Split by groups (each group is separated by space and starts with a letter)
+        const groups = [];
+        let currentGroup = '';
+        let currentData = '';
+        let inGroup = false;
+        
+        for (let i = 0; i < cleanString.length; i++) {
+          const char = cleanString[i];
+          
+          if (char === '[') {
+            inGroup = true;
+            currentData = '';
+          } else if (char === ']') {
+            inGroup = false;
+            if (currentGroup && currentData) {
+              groups.push({
+                name: currentGroup.trim(),
+                data: currentData.trim()
+              });
+            }
+            currentGroup = '';
+            currentData = '';
+          } else if (!inGroup && /[A-Z]/.test(char)) {
+            // Start of a new group name
+            if (currentGroup && currentData) {
+              groups.push({
+                name: currentGroup.trim(),
+                data: currentData.trim()
+              });
+            }
+            currentGroup = char;
+            currentData = '';
+          } else if (inGroup) {
+            currentData += char;
+          } else {
+            currentGroup += char;
+          }
+        }
+        
+        // Add the last group if exists
+        if (currentGroup && currentData) {
+          groups.push({
+            name: currentGroup.trim(),
+            data: currentData.trim()
+          });
+        }
+        
+        // Extract frequency
+        const freqMatch = cleanString.match(/f = ([\d.]+)Hz/);
+        const frequency = freqMatch ? freqMatch[1] : '--';
+        
+        // Update frequency display
+        document.getElementById('frequencyDisplay').textContent = `Frecuencia: ${frequency} Hz`;
+        
+        // Update table
+        updateStatusTable(groups);
+        
+      } catch (error) {
+        console.error('Error parsing status string:', error);
+      }
+    }
+    
+    // Function to update the status table
+    function updateStatusTable(groups) {
+      const tbody = document.getElementById('statusTableBody');
+      tbody.innerHTML = '';
+      
+      groups.forEach(group => {
+        const row = document.createElement('tr');
+        
+        // Group name
+        const nameCell = document.createElement('td');
+        nameCell.textContent = group.name;
+        nameCell.className = 'group-name';
+        row.appendChild(nameCell);
+        
+        // Parse group data for each measurement type
+        const measurements = parseGroupData(group.data);
+        
+        // Current (I)
+        const currentCell = document.createElement('td');
+        currentCell.textContent = measurements.I || '--';
+        row.appendChild(currentCell);
+        
+        // Voltage (U)
+        const voltageCell = document.createElement('td');
+        voltageCell.textContent = measurements.U || '--';
+        row.appendChild(voltageCell);
+        
+        // Active Power (P)
+        const powerCell = document.createElement('td');
+        powerCell.textContent = measurements.P || '--';
+        row.appendChild(powerCell);
+        
+        // Reactive Power (Pvar)
+        const reactiveCell = document.createElement('td');
+        reactiveCell.textContent = measurements.Pvar || '--';
+        row.appendChild(reactiveCell);
+        
+        // Power Factor (Cos)
+        const cosCell = document.createElement('td');
+        cosCell.textContent = measurements.Cos || '--';
+        row.appendChild(cosCell);
+        
+        tbody.appendChild(row);
+      });
+    }
+    
+    // Function to parse individual group data
+    function parseGroupData(groupData) {
+      const measurements = {};
+      
+      // Split by spaces and parse each measurement
+      const parts = groupData.split(' ');
+      
+      parts.forEach(part => {
+        if (part.includes('=')) {
+          const [key, value] = part.split('=');
+          measurements[key] = value;
+        }
+      });
+      
+      return measurements;
+    }
+    
+    // Override or extend the existing status update function
+    // This assumes there's already a function that receives the status string
+    // You may need to integrate this with your existing WebSocket or polling mechanism
+    
+    // Example of how to call this function when you receive status data:
+    // parseStatusAndUpdateTable("status\\online ( L1:[ I=0.432A U=5.036V P=0.002kW Pvar=-0.000kVAr Cos=0.736 ] L2:[ I=0.308A U=51.883V P=0.001kW Pvar=-0.001kVAr Cos=0.000 ] L3:[ I=0.461A U=5.369V P=0.002kW Pvar=-0.001kVAr Cos=0.483 ] ; f = 50.000Hz )");
+  </script>
+  <script src="alarm.js" type="text/javascript"></script>
+  <script src="script.js"></script>
 </body>
 </html>

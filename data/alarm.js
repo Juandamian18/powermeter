@@ -56,7 +56,7 @@ function getconnect() {
                 savecounter = 2;
             }
             else {
-                document.getElementById('status').firstChild.nodeValue = partsarry[1];
+                document.getElementById('status').firstChild.nodeValue = (typeof parseStatusAndUpdateTable === 'function') ? parseStatusAndUpdateTable(partsarry[1]) : partsarry[1] ;
             }
     
             timeout = 4;
