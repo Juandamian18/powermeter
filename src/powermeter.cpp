@@ -24,7 +24,7 @@
 #include <Arduino.h>
 #include <FS.h>
 #include <SPIFFS.h>
-
+#include "mqttclient.h"
 #include "config.h"
 #include "ioport.h"
 #include "measure.h"
@@ -53,6 +53,7 @@ void setup( void ) {
      * Setup Tasks
      */
     measure_StartTask();
+    mqtt_client_StartTask();
     asyncwebserver_StartTask();
     ntp_StartTask();
     lcd_init();

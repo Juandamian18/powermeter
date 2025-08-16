@@ -18,11 +18,10 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  along with this program; if not, write to the Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */ 
 #include <WiFi.h>
-#include <AsyncMqttClient.h>
+#include <PubSubClient.h>
 #include <ArduinoJson.h>
 
 #include "config/ioport_config.h"
@@ -34,8 +33,9 @@
 #include "wificlient.h"
 
 mqtt_config_t mqtt_config;
-TaskHandle_t _ASYNCMQTT_Task;
-AsyncMqttClient mqttClient;
+TaskHandle_t _MQTT_Task;
+WiFiClient espClient;
+PubSubClient mqttClient(espClient);
 bool disable_MQTT = false;
 char reset_state[64] = "";
 
@@ -80,42 +80,22 @@ void mqtt_client_on_connect( bool sessionPresent ) {
 }
 
 /**
- * @brief mqtt on disconnect call back routine
- * 
- * @param reason 
- */
-void mqtt_client_on_disconnect(AsyncMqttClientDisconnectReason reason) {
-    log_i( "MQTT-Client: Disconnected from MQTT\r\n" );
-    /**
-     * check connection state and reconnect if possible/allowed
-     */
-    if ( WiFi.isConnected() ) {
-        if ( strlen( mqtt_config.server ) >= 1 && disable_MQTT == false ) {
-            mqtt_client_enable();
-        }
-    }
-}
-
-/**
- * @brief mqtt on message call back routine
+ * @brief mqtt on message call back routine for PubSubClient
  * 
  * @param topic             mqtt topic
  * @param payload           payload buffer, not zero terminated
- * @param properties        
  * @param len               size of the payload buffer
- * @param index             
- * @param total
  */
-void mqtt_client_on_message(char* topic, char* payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total) {
+void mqtt_client_callback(char* topic, byte* payload, unsigned int length) {
     /**
      * copy no zero terminate payload buffer into a terminated buffer
      */    
     char *msg = NULL;
-    if( !(msg = (char *)calloc( 1, len + 1 ) ) ) {
+    if( !(msg = (char *)calloc( 1, length + 1 ) ) ) {
         log_e("error while allocate payload buffer");
         while( true );
     }
-    memcpy( (void*)msg, payload, len );
+    memcpy( (void*)msg, payload, length );
     log_d("MQTT-Client: Publish received, topic: [%s] , payload: [%s]", topic, msg );
     /**
      * check if the msg come from cmnd topc
@@ -149,7 +129,7 @@ void mqtt_client_on_message(char* topic, char* payload, AsyncMqttClientMessagePr
  * @param payload   msg to send
  */
 void mqtt_client_publish( char * topic, char * payload ) {
-    mqttClient.publish( topic , 1, false, payload, strlen( payload ), false, 0 );
+    mqttClient.publish( topic, payload );
 }
 
 /**
@@ -162,7 +142,7 @@ void mqtt_client_StartTask( void ) {
                                 10000,              /* Stack size in words */
                                 NULL,               /* Task input parameter */
                                 1,                  /* Priority of the task */
-                                &_ASYNCMQTT_Task,   /* Task handle. */
+                                &_MQTT_Task,        /* Task handle. */
                                 _MQTT_TASKCORE );   /* Core where the task should run */
 }
 
@@ -228,9 +208,7 @@ void mqtt_client_Task( void * pvParameters ) {
     /**
      * set call back functions
      */
-    mqttClient.onConnect( mqtt_client_on_connect );
-    mqttClient.onDisconnect( mqtt_client_on_disconnect );
-    mqttClient.onMessage( mqtt_client_on_message );    
+    mqttClient.setCallback( mqtt_client_callback );
     log_i( "Start MQTT-Client on Core: %d", xPortGetCoreID() );
     /**
      * delay task
@@ -248,7 +226,7 @@ void mqtt_client_Task( void * pvParameters ) {
         if ( WiFi.isConnected() ) {
             if ( !mqttClient.connected() ) {
                 if ( strlen( mqtt_config.server ) >= 1 && disable_MQTT == false ) {
-                    mqttClient.connect();
+                    mqtt_client_reconnect();
                 }
             }
             else {
@@ -293,6 +271,8 @@ void mqtt_client_Task( void * pvParameters ) {
                 }
             }
         }
+        // Process MQTT messages
+        mqttClient.loop();
     }
 }
 
@@ -588,12 +568,29 @@ void mqtt_client_enable( void ) {
      * reload all connection settings
      */
     mqttClient.setServer( mqtt_config.server , mqtt_config.port );
-    mqttClient.setClientId( wificlient_get_hostname() );
-    mqttClient.setCredentials( mqtt_config.username, mqtt_config.password );
     /**
      * start connection
      */
-    mqttClient.connect();
+    mqtt_client_reconnect();
+}
+
+/**
+ * @brief reconnect to MQTT broker
+ */
+bool mqtt_client_reconnect() {
+    // Create a random client ID
+    String clientId = String(wificlient_get_hostname()) + "-" + String(random(0xffff), HEX);
+    
+    // Attempt to connect
+    if (mqttClient.connect(clientId.c_str(), mqtt_config.username, mqtt_config.password)) {
+        log_i("MQTT-Client: connected to %s", mqtt_config.server);
+        // Setup topics and subscribe
+        mqtt_client_on_connect(true);
+        return true;
+    } else {
+        log_e("MQTT-Client: failed, rc=%d", mqttClient.state());
+        return false;
+    }
 }
 
 const char *mqtt_client_get_server( void ) {

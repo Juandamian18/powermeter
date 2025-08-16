@@ -18,11 +18,12 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  along with this program; if not, write to the Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */ 
 #ifndef _MQTTCLIENT_H
     #define _MQTTCLIENT_H
+
+    #include <PubSubClient.h>
 
     /**
      * @brief start the mqqt client background task
@@ -123,4 +124,9 @@
      * @note all settings has a direct effect but was not stored, only here the a new json is written
      */
     void mqtt_save_settings( void );
+    
+    // Callback function declarations for PubSubClient
+    void mqtt_client_callback(char* topic, byte* payload, unsigned int length);
+    bool mqtt_client_reconnect();
+    
 #endif // _MQTTCLIENT_H
